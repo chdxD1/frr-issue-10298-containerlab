@@ -1,5 +1,10 @@
 # How to trigger bug
 
+Running Containerlab:
+```
+sudo containerlab deploy --reconfigure -t frr-bug.yaml
+```
+
 From "fabric" side:
 ```
 docker exec -ti clab-frr-bug-fabric vtysh
