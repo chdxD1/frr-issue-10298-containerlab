@@ -1,0 +1,12 @@
+all:
+  children:
+    linux:
+      hosts:
+        clab-frr-bug-dcgw01:
+          ansible_host: 172.20.20.5
+        clab-frr-bug-dcgw02:
+          ansible_host: 172.20.20.2
+        clab-frr-bug-fabric:
+          ansible_host: 172.20.20.4
+        clab-frr-bug-server:
+          ansible_host: 172.20.20.3

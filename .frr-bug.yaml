@@ -1,0 +1,74 @@
+name: frr-bug
+
+topology:
+  nodes:
+    dcgw01:
+      kind: linux
+      image: frrouting/frr:v8.1.0
+      binds:
+        - dcgw01/daemons:/etc/frr/daemons
+        - dcgw01/frr.conf:/etc/frr/frr.conf
+      exec:
+        - ip link add testvrf type vrf table 10
+        - ip link set dev testvrf up
+        - ip link add vxlan100 type vxlan id 100 dev lo local 192.168.100.1 dstport 4789 nolearning
+        - ip link add bridge100 type bridge
+        - ip link set vxlan100 master bridge100
+        - ip link set bridge100 master testvrf
+        - ip link set vxlan100 up
+        - ip link set bridge100 up
+        - ip link add dummy_testvrf type dummy
+        - ip link set master testvrf dev dummy_testvrf
+        - ip link set dev dummy_testvrf up
+        - ip a add 10.100.0.1/24 dev dummy_testvrf
+    dcgw02:
+      kind: linux
+      image: frrouting/frr:v8.1.0
+      binds:
+        - dcgw02/daemons:/etc/frr/daemons
+        - dcgw02/frr.conf:/etc/frr/frr.conf
+      exec:
+        - ip link add testvrf type vrf table 10
+        - ip link set dev testvrf up
+        - ip link add vxlan100 type vxlan id 100 dev lo local 192.168.100.2 dstport 4789 nolearning
+        - ip link add bridge100 type bridge
+        - ip link set vxlan100 master bridge100
+        - ip link set bridge100 master testvrf
+        - ip link set vxlan100 up
+        - ip link set bridge100 up
+        - ip link add dummy_testvrf type dummy
+        - ip link set master testvrf dev dummy_testvrf
+        - ip link set dev dummy_testvrf up
+        - ip a add 10.100.0.1/24 dev dummy_testvrf
+    fabric:
+      kind: linux
+      image: frrouting/frr:v8.1.0
+      binds:
+        - fabric/daemons:/etc/frr/daemons
+        - fabric/frr.conf:/etc/frr/frr.conf
+    server:
+      kind: linux
+      image: frr:alpine-1752bfdfc1
+      binds:
+        - server/daemons:/etc/frr/daemons
+        - server/frr.conf:/etc/frr/frr.conf
+      exec:
+        - ip link add testvrf type vrf table 10
+        - ip link set dev testvrf up
+        - ip link add vxlan100 type vxlan id 100 dev lo local 192.168.100.4 dstport 4789 nolearning
+        - ip link add bridge100 type bridge
+        - ip link set vxlan100 master bridge100
+        - ip link set bridge100 master testvrf
+        - ip link set vxlan100 up
+        - ip link set bridge100 up
+        - ip a add 10.150.0.1/32 dev bridge100
+
+
+  links:
+    - endpoints: ["dcgw01:eth1", "fabric:eth1"]
+    - endpoints: ["dcgw02:eth1", "fabric:eth2"]
+    - endpoints: ["server:eth1", "fabric:eth3"]
+    - endpoints: ["server:eth2", "fabric:eth4"]
+    - endpoints: ["server:eth3", "fabric:eth5"]
+    - endpoints: ["server:eth4", "fabric:eth6"]
+
