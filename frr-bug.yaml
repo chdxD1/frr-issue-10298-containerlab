@@ -4,7 +4,7 @@ topology:
   nodes:
     dcgw01:
       kind: linux
-      image: frrouting/frr:v8.1.0
+      image: frrouting/frr:v8.4.1
       binds:
         - dcgw01/daemons:/etc/frr/daemons
         - dcgw01/frr.conf:/etc/frr/frr.conf
@@ -23,7 +23,7 @@ topology:
         - ip a add 10.100.0.1/24 dev dummy_testvrf
     dcgw02:
       kind: linux
-      image: frrouting/frr:v8.1.0
+      image: frrouting/frr:v8.4.1
       binds:
         - dcgw02/daemons:/etc/frr/daemons
         - dcgw02/frr.conf:/etc/frr/frr.conf
@@ -42,13 +42,13 @@ topology:
         - ip a add 10.100.0.1/24 dev dummy_testvrf
     fabric:
       kind: linux
-      image: frrouting/frr:v8.1.0
+      image: frrouting/frr:v8.4.1
       binds:
         - fabric/daemons:/etc/frr/daemons
         - fabric/frr.conf:/etc/frr/frr.conf
     server:
       kind: linux
-      image: frr:alpine-1752bfdfc1 # Change version here
+      image: frrouting/frr:v8.4.1
       binds:
         - server/daemons:/etc/frr/daemons
         - server/frr.conf:/etc/frr/frr.conf
