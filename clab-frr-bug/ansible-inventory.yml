@@ -3,12 +3,12 @@ all:
     linux:
       hosts:
         clab-frr-bug-fabric:
-          ansible_host: 172.20.20.3
-        clab-frr-bug-rr01:
           ansible_host: 172.20.20.4
-        clab-frr-bug-rr02:
-          ansible_host: 172.20.20.2
-        clab-frr-bug-server01:
+        clab-frr-bug-rr01:
           ansible_host: 172.20.20.6
-        clab-frr-bug-server02:
+        clab-frr-bug-rr02:
           ansible_host: 172.20.20.5
+        clab-frr-bug-server01:
+          ansible_host: 172.20.20.3
+        clab-frr-bug-server02:
+          ansible_host: 172.20.20.2
