@@ -4,25 +4,25 @@ topology:
   nodes:
     rr01:
       kind: linux
-      image: frrouting/frr:v8.4.0
+      image: frrouting/frr:v8.4.1
       binds:
         - rr01/daemons:/etc/frr/daemons
         - rr01/frr.conf:/etc/frr/frr.conf
     rr02:
       kind: linux
-      image: frrouting/frr:v8.4.0
+      image: frrouting/frr:v8.4.1
       binds:
         - rr02/daemons:/etc/frr/daemons
         - rr02/frr.conf:/etc/frr/frr.conf
     fabric:
       kind: linux
-      image: frrouting/frr:v8.4.0
+      image: frrouting/frr:v8.4.1
       binds:
         - fabric/daemons:/etc/frr/daemons
         - fabric/frr.conf:/etc/frr/frr.conf
     server01:
       kind: linux
-      image: frrouting/frr:v8.4.0
+      image: frrouting/frr:v8.4.1
       binds:
         - server01/daemons:/etc/frr/daemons
         - server01/frr.conf:/etc/frr/frr.conf
@@ -38,7 +38,7 @@ topology:
         - ip a add 10.150.0.1/32 dev bridge100
     server02:
       kind: linux
-      image: frrouting/frr:v8.4.0
+      image: frrouting/frr:v8.4.1
       binds:
         - server02/daemons:/etc/frr/daemons
         - server02/frr.conf:/etc/frr/frr.conf
